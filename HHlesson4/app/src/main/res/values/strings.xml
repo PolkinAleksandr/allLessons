@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Моя квартира</string>
+    <string name="text_button_recycler">Recycler</string>
+    <string name="text_menu_dialog">dialog</string>
+    <string name="text_dialog">OK</string>
+    <string name="text_menu_toast">toast</string>
+    <string name="my_apartament">Моя квартира</string>
+</resources>

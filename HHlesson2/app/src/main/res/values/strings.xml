@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">H&amp;H(lesson2)</string>
+    <string name="text_stih_pushkin">Sorry,there is nothing</string>
+    <string name="text_button_activity1">Боль и страдание</string>
+    <string name="text_start_activity1">Задание 1</string>
+    <string name="text_start_activity2">Задание 2</string>
+    <string name="text_button1">Кнопка 1</string>
+</resources>

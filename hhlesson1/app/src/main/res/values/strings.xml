@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">h&amp;h(lesson1)</string>
+    <string name="text_button_activity1">Задание 1</string>
+    <string name="text_button_activity2">Задание 2</string>
+    <string name="button_save">Сохранить</string>
+    <string name="text_button_look">Просмотреть</string>
+</resources>
