@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
 
 
@@ -51,15 +54,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.textView)
         private TextView mTextView;
+
+        @BindView(R.id.textView2)
         private TextView mTextView2;
+
+        @BindView(R.id.imageView)
         private ImageView imageView;
 
         ViewHolder(View itemView){
             super(itemView);
-            mTextView = itemView.findViewById(R.id.textView);
-            mTextView2 = itemView.findViewById(R.id.textView2);
-            imageView = itemView.findViewById(R.id.imageView);
+            ButterKnife.bind(itemView);
         }
 
 

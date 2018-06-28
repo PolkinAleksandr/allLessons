@@ -17,14 +17,22 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecycleActivity extends AppCompatActivity {
 
+    @BindView(R.id.toolbar)
+    private android.support.v7.widget.Toolbar toolbar;
+
+    @BindView(R.id.recycler_view)
     private RecyclerView mRecyclerView;
+
     private RecyclerView.Adapter mAdapter;
     private GridLayoutManager mLayoutManager;
     private List<DatasetFull> datasetFullsList;
     private DatasetFull datasetFull;
-    private android.support.v7.widget.Toolbar toolbar;
+
     public final int SQUARE_VIEW = 0;
     public final int FLAT_VIEW = 1;
 
@@ -37,12 +45,11 @@ public class RecycleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycle);
+        ButterKnife.bind(this);
 
-        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mRecyclerView = findViewById(R.id.recycler_view);
         datasetFullsList = new ArrayList<>();
         createDataset("Квитанции", "-40 080,55", R.drawable.ic_bill, true);
         createDataset("Счетчики", "Подайте показания", R.drawable.ic_counter, true);
