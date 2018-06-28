@@ -7,11 +7,9 @@ import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
-
-    @BindView(R.id.button_recycler)
-    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,11 +17,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(RecycleActivity.createOpenActivity(MainActivity.this));
-            }
-        });
+    }
+
+    @OnClick(R.id.button_recycler)
+    void onNewActivityClick(){
+        startActivity(RecycleActivity.createOpenActivity(MainActivity.this));
     }
 }

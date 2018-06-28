@@ -23,10 +23,10 @@ import butterknife.ButterKnife;
 public class RecycleActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
-    private android.support.v7.widget.Toolbar toolbar;
+    android.support.v7.widget.Toolbar toolbar;
 
     @BindView(R.id.recycler_view)
-    private RecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
 
     private RecyclerView.Adapter mAdapter;
     private GridLayoutManager mLayoutManager;
