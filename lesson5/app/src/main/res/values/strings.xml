@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">lesson 5</string>
+    <string name="go_to_activity2">Go to Activity2</string>
+    <string name="go_to_activity4">Go to Activity4</string>
+    <string name="go_to_activity3">Go to Activity3</string>
+    <string name="go_to_activity5">Go to Activity5</string>
+    <string name="go_to_activity1">Go to Activity1</string>
+    <string name="input_edit_text">Введите текст</string>
+    <string name="deliver_result">deliver_result</string>
+</resources>

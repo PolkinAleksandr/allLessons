@@ -1,6 +1,8 @@
 package aleksandrpolkin.ru.hhlesson4;
 
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -74,7 +76,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
             imageView.setImageResource(datasetFull.getImageView());
             if(datasetFull.getTextWarning()){
                 mTextView2.setTextColor(Color.parseColor("#ff4242"));
-            }
+            }else{mTextView2.setTextColor(itemView.getResources().getColor());}
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
