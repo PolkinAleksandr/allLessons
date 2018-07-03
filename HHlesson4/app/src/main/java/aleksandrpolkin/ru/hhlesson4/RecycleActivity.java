@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -28,11 +28,12 @@ public class RecycleActivity extends AppCompatActivity {
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private RecyclerView.Adapter mAdapter;
+    private MyAdapter mAdapter;
     private GridLayoutManager mLayoutManager;
     private List<DatasetFull> datasetFullsList;
     private DatasetFull datasetFull;
 
+    //TODO to adapter
     public final int SQUARE_VIEW = 0;
     public final int FLAT_VIEW = 1;
 
@@ -47,11 +48,13 @@ public class RecycleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recycle);
         ButterKnife.bind(this);
 
+
+        //TODO проще через тулбар
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         datasetFullsList = new ArrayList<>();
-        createDataset("Квитанции", "-40 080,55", R.drawable.ic_bill, true);
+        createDataset("Квитанции asd asdhgjhasd hjasdhjasdhj hjasdjhgajhsdg hasjhdg", "-40 080,55", R.drawable.ic_bill, true);
         createDataset("Счетчики", "Подайте показания", R.drawable.ic_counter, true);
         createDataset("Рассрочка", "Сл. платеж 25.02.2018", R.drawable.ic_installment, false);
         createDataset("Памятка жителя А101", null, R.drawable.ic_about1, false);
@@ -62,7 +65,8 @@ public class RecycleActivity extends AppCompatActivity {
         createDataset("Охрана", "Нет", R.drawable.ic_guard, false);
         createDataset("Контакты УК и служб", null, R.drawable.ic_uk_contacts, false);
 
-        Collections.sort(datasetFullsList,COMPARE_BY_DESCRIPTION);
+        Collections.sort(datasetFullsList, COMPARE_BY_DESCRIPTION);
+        //TODO cknstants
         mLayoutManager = new GridLayoutManager(RecycleActivity.this, 2);
         mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -78,12 +82,24 @@ public class RecycleActivity extends AppCompatActivity {
             }
         });
         //Отступы
-        RecyclerView.ItemDecoration deviderItemDecoration = new DeviderItemDecoration(10);
-        mRecyclerView.addItemDecoration(deviderItemDecoration);
+        //TODO пиксели
+        //TODO useAppCompatPadding
+        //RecyclerView.ItemDecoration deviderItemDecoration = new DeviderItemDecoration(10);
+        //mRecyclerView.addItemDecoration(deviderItemDecoration);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
+
         mAdapter = new MyAdapter(datasetFullsList);
+        mAdapter.setOnMyItemClickListener(new MyAdapter.OnMyItemClickListener() {
+            @Override
+            public void onItemClick(String string) {
+
+            }
+        });
+
         mRecyclerView.setAdapter(mAdapter);
+
+
     }
 
     @Override
@@ -116,6 +132,7 @@ public class RecycleActivity extends AppCompatActivity {
 
     public void createDataset(String name, String description, int imageViewId, boolean textWarning) {
         datasetFull = new DatasetFull();
+        // TODO почему не через конструктор?
         datasetFull.setDatasetFull(name, description, imageViewId, textWarning);
         datasetFullsList.add(datasetFull);
     }
@@ -123,11 +140,13 @@ public class RecycleActivity extends AppCompatActivity {
     public static final Comparator<DatasetFull> COMPARE_BY_DESCRIPTION = new Comparator<DatasetFull>() {
         @Override
         public int compare(DatasetFull lhs, DatasetFull rhs) {
-            if(lhs.getDescription() == null && rhs.getDescription() != null){
+            if (lhs.getDescription() == null && rhs.getDescription() != null) {
                 return 1;
-            }else if(lhs.getDescription() != null && rhs.getDescription() == null) {
+            } else if (lhs.getDescription() != null && rhs.getDescription() == null) {
                 return -1;
-            }else{return 0;}
+            } else {
+                return 0;
+            }
         }
     };
 }

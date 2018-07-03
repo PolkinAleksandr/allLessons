@@ -1,7 +1,5 @@
 package aleksandrpolkin.ru.hhlesson4;
 
-import android.graphics.drawable.Drawable;
-
 public class DatasetFull {
 
 
@@ -30,4 +28,5 @@ public class DatasetFull {
         this.imageViewId = imageViewId;
         this.textWarning = textWarning;
     }
+
 }

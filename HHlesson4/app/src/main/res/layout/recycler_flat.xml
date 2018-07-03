@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     app:cardCornerRadius="2dp"
     android:layout_gravity="center"
+    app:cardUseCompatPadding="true"
+    android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/cardview_light_background"
     android:layout_height="wrap_content">
 
@@ -33,6 +35,9 @@
         <TextView
             android:id="@+id/textView"
             style="@style/CardTextName"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="asdasdasdassda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="13dp"
