@@ -2,6 +2,7 @@ package aleksandrpolkin.ru.lesson5dlc;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -37,8 +38,8 @@ public class BaseNavigationActivity extends AppCompatActivity implements Navigat
             case R.id.nav_main_activity:
                 if (getClass() != MainActivity.class) {
                     intent = MainActivity.createStartActivity(this);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
                 } else {
                     drawer.closeDrawer(GravityCompat.START);
                 }
@@ -47,8 +48,8 @@ public class BaseNavigationActivity extends AppCompatActivity implements Navigat
             case R.id.nav_activity2:
                 if (getClass() != Activity2.class) {
                     intent = Activity2.createStartActivity(this);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    overridePendingTransition(0,0);
                 } else {
                     drawer.closeDrawer(GravityCompat.START);
                 }
@@ -56,13 +57,14 @@ public class BaseNavigationActivity extends AppCompatActivity implements Navigat
             case R.id.nav_activity3:
                 if (getClass() != Activity3.class) {
                     intent = Activity3.createStartActivity(this);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    overridePendingTransition(0,0);
                 } else {
                     drawer.closeDrawer(GravityCompat.START);
                 }
                 break;
         }
+
         return true;
     }
 }

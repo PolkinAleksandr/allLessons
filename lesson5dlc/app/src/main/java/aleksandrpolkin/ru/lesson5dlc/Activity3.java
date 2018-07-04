@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,9 @@ import android.widget.Button;
 public class Activity3 extends BaseNavigationActivity {
 
     static Intent createStartActivity(Context context) {
-        return new Intent(context, Activity3.class);
+        Intent intent = new Intent(context, Activity3.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return intent;
     }
 
     private Button buttonProduct;
@@ -47,5 +50,11 @@ public class Activity3 extends BaseNavigationActivity {
                 startActivity(Activity6.createStartActivity(Activity3.this));
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        drawer.closeDrawer(GravityCompat.START);
+        super.onDestroy();
     }
 }

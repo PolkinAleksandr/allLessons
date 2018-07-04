@@ -20,7 +20,9 @@ import android.widget.Button;
 public class MainActivity extends BaseNavigationActivity {
 
     static Intent createStartActivity(Context context) {
-        return new Intent(context, MainActivity.class);
+       Intent intent = new Intent(context, MainActivity.class);
+       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+       return intent;
     }
 
     private Button buttonProduct;
@@ -50,6 +52,5 @@ public class MainActivity extends BaseNavigationActivity {
             }
         });
     }
-
 }
 
