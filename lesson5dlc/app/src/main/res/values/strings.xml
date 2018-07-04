@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">lesson 5 dlc</string>
+    <string name="text_activity2">Activity2</string>
+    <string name="text_activity3">Activity3</string>
+    <string name="text_activity4">Activity4</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="text_product">Товар</string>
+    <string name="text_main_activity">MainActivity</string>
+    <string name="header">header</string>
+    <string name="text_dlc">DLC</string>
+    <string name="main">main</string>
+    <string name="base">base</string>
+    <string name="activity6">activity6</string>
+    <string name="activity5">activity5</string>
+    <string name="activity4">activity4</string>
+    <string name="activity3">activity3</string>
+    <string name="activity2">activity2</string>
+</resources>
