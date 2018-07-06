@@ -26,23 +26,11 @@ public class MainActivity extends BaseNavigationActivity {
     }
 
     private Button buttonProduct;
-    private Toolbar toolbar;
-    private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        toolbar = findViewById(R.id.toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        setDrawer(drawer);
-        createNavigationView(this);
 
         buttonProduct = findViewById(R.id.button_product);
         buttonProduct.setOnClickListener(new View.OnClickListener() {

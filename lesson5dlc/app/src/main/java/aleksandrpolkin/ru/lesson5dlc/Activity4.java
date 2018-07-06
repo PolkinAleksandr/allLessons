@@ -21,10 +21,6 @@ public class Activity4 extends BaseNavigationActivity {
         return new Intent(context, Activity4.class);
     }
 
-    private Toolbar toolbar;
-    private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,23 +29,5 @@ public class Activity4 extends BaseNavigationActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        setDrawer(drawer);
-
-
-        createNavigationView(this);
     }
-
-    @Override
-    protected void onDestroy() {
-        drawer.closeDrawer(GravityCompat.START);
-        super.onDestroy();
-    }
-
 }

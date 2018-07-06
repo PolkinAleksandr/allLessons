@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 
 public class Activity1 extends AppCompatActivity {
 
-    private static long time;
+    private long time;
     static final String KEY_TIME_FOR_ACTIVITY4 = "KEY_TIME_FOR_ACTIVITY4";
 
     public static Intent createStartActivity(Context context) {
@@ -36,7 +36,7 @@ public class Activity1 extends AppCompatActivity {
         buttonStartActivity4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getTime();
+                time =  getTime();
                 Intent intent = Activity4.createStartActivity(Activity1.this);
                 intent.putExtra(KEY_TIME_FOR_ACTIVITY4, time);
                 startActivity(intent);
@@ -52,7 +52,6 @@ public class Activity1 extends AppCompatActivity {
     }
 
     public static long getTime() {
-        time = System.currentTimeMillis();
-        return time;
+        return  System.currentTimeMillis();
     }
 }

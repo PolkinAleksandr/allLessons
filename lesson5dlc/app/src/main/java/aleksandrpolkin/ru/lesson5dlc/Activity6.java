@@ -20,7 +20,5 @@ public class Activity6 extends BaseNavigationActivity    {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        createNavigationView(this);
-    }
+        }
 }

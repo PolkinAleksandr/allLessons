@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 
 public class Activity4 extends AppCompatActivity {
 
-    public static long timeLong;
+    private long timeLong;
     static final int DEFAULT_VALUE_EXTRA = 123;
     static final String KEY_TIME_FOR_ACTIVITY4 = "KEY_TIME_FOR_ACTIVITY4";
 
@@ -60,13 +60,12 @@ public class Activity4 extends AppCompatActivity {
     }
 
     public static long getTimeLong() {
-        timeLong = System.currentTimeMillis();
-        return timeLong;
+        return System.currentTimeMillis();
     }
 
     public void onDisplay() {
         timeLong = getIntent().getLongExtra(Activity1.KEY_TIME_FOR_ACTIVITY4, DEFAULT_VALUE_EXTRA);
-        String timeString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date(timeLong));
+        String timeString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.getDefault()).format(new Date(timeLong));
         textViewTime.setText(timeString);
     }
 }
