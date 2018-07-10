@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">lesson 6</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="text_nav_menu1">Боковое меню 1</string>
+    <string name="text_nav_menu2">Боковое меню 2</string>
+    <string name="text_nav_menu3">Боковое меню 3</string>
+    <string name="header">header</string>
+    <string name="item_one">item one</string>
+    <string name="item_two">Item two</string>
+    <string name="item_three">Item three</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_fragment1">Фрагмент 1</string>
+    <string name="text_fragment2">Фрагмент 2</string>
+    <string name="text_open_banner">Показать баннер</string>
+    <string name="text_close_banner">Свернуть баннер</string>
+</resources>

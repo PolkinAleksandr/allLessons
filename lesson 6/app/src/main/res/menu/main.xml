@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
+    <group android:id="@+id/group1">
+
+        <item
+            android:id="@+id/g1_item1"
+            android:title="g1.Item1" />
+        <item
+            android:id="@+id/g1_item2"
+            android:title="g1.Item2" />
+    </group>
+    <group android:id="@+id/group2">
+        <item
+            android:id="@+id/g2_item1"
+            android:title="g2.item1" />
+        <item
+            android:id="@+id/g2_item2"
+            android:title="g2.item2" />
+    </group>
+</menu>
