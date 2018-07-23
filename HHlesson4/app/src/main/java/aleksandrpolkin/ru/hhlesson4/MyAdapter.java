@@ -76,7 +76,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
             imageView.setImageResource(datasetFull.getImageView());
             if(datasetFull.getTextWarning()){
                 mTextView2.setTextColor(Color.parseColor("#ff4242"));
-            }else{mTextView2.setTextColor(itemView.getResources().getColor());}
+            }else{mTextView2.setTextColor(itemView.getResources().getColor(R.color.coral));}
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

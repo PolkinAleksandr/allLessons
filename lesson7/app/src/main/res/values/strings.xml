@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">lesson 7</string>
+    <string name="text_title_toolbar_most">The Most SPB</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading">loading...</string>
+    <string name="repeat">Повторить</string>
+    <string name="memory">НАПОМНИТЬ</string>
+    <string name="text_dialog">За сколько до закрытия моста вас предупредить?</string>
+    <string name="cancel">Отменить</string>
+    <string name="ok">OK</string>
+</resources>
