@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">lesson 8</string>
+    <string name="no_data">Заметок нет</string>
+    <string name="text_title">Название</string>
+    <string name="text_note">Текст заметки</string>
+    <string name="note">Заметки</string>
+    <string name="validate_false">Ошибка заполнения</string>
+    <string name="alert_massage">Что вы хотите сделать с заметкой?</string>
+    <string name="rar">Архивировать</string>
+    <string name="delete">Удалить</string>
+    <string name="choose_color">choose color</string>
+    <string name="alert_chosse_color_title">Выбор цвета</string>
+    <string name="cancel">Отмена</string>
+</resources>
