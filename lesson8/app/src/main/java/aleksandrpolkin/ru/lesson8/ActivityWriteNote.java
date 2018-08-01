@@ -105,11 +105,10 @@ public class ActivityWriteNote extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (notebook != null) {
-                notebook.setColorBackground(data.getIntExtra(ARGUMENT_WRITE_NOTE_COLOR, MyColor.DEFAULT_COLOR));
-            } else {
+            if (notebook == null) {
                 notebook = new Notebook();
             }
+            notebook.setColorBackground(data.getIntExtra(ARGUMENT_WRITE_NOTE_COLOR, MyColor.DEFAULT_COLOR));
         }
     }
 }
