@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">lesson 9</string>
+    <string name="download">Скачать</string>
+    <string name="unzip">Разархивировать</string>
+    <string name="title_notification">Загрузка...</string>
+    <string name="text_notification">Идет загрузка</string>
+    <string name="text_unzip_notification">Разархивирование</string>
+    <string name="picture_install">Картинка установлена</string>
+    <string name="download_file">Скачивание файла</string>
+</resources>

@@ -41,9 +41,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecycleAdapter.MyViewHolder holder, int position) {
-
         holder.setViewHolder(objectsData.get(position));
-
     }
 
     @Override
@@ -52,7 +50,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
-
         private TextView textViewName;
         private TextView textViewTime;
         private ImageView imageViewBig;
