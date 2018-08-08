@@ -1,23 +1,26 @@
 package aleksandrpolkin.ru.lesson9;
 
-import android.app.Notification;
-import android.app.ProgressDialog;
+import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat;
+import android.widget.ImageView;
 
 public class DownloadReceiver extends ResultReceiver{
 
     static final String ARGUMENT_URL = "url";
     static final String ARGUMENT_RECEIVER = "receiver";
     static final String ARGUMENT_PROGRESS = "arg_progress";
-    NotificationManagerCompat notificationManager;
-    Notification.Builder builder;
+    NotificationManager notificationManager;
+    NotificationCompat.Builder builder;
+    String path;
 
-
-    DownloadReceiver(Handler handler, Notification.Builder builder) {
+    DownloadReceiver(Handler handler, NotificationCompat.Builder builder, NotificationManager notificationManager) {
         super(handler);
+        this.builder = builder;
+        this.notificationManager = notificationManager;
     }
 
     @Override
@@ -25,11 +28,19 @@ public class DownloadReceiver extends ResultReceiver{
         super.onReceiveResult(resultCode, resultData);
         if (resultCode == MyServiceDownload.UPDATE_PROGRESS) {
             int progress = resultData.getInt(ARGUMENT_PROGRESS);
-//            progressDialog.setProgress(progress);
+                builder.setContentText(String.valueOf(progress)+ "%");
+                notificationManager.notify(MainActivity.NOTIFY_ID, builder.build());
             if (progress == 100) {
-//                progressDialog.dismiss();
+                builder.setContentText("Разархивирование");
+                notificationManager.notify(MainActivity.NOTIFY_ID, builder.build());
+            }
+            }
+            if(resultCode == MyServiceDownload.PATH_UPDATE){
+           //     path = resultData.getString(ARGUMENT_PROGRESS);
+                notificationManager.cancelAll();
 
             }
         }
+
     }
-}
+

@@ -29,10 +29,13 @@ import java.util.zip.ZipInputStream;
 class MyServiceDownload extends IntentService {
 
     public static final int UPDATE_PROGRESS = 8344;
+    public static final int PATH_UPDATE = 8345;
     NotificationCompat.Builder builder;
     NotificationManagerCompat notificationManager;
     int progress = 0;
-    static final int NOTIFY_ID = 202;
+    String path;
+
+
 
 
     public MyServiceDownload() {
@@ -44,7 +47,7 @@ class MyServiceDownload extends IntentService {
         protected void onHandleIntent(Intent intent) {
             String zipFileName = getFilesDir() + "/dog.zip";
             String zipFileLocation = getFilesDir().getPath() ;
-            setNotification();
+
             String urlToDownload = intent.getStringExtra(DownloadReceiver.ARGUMENT_URL);
             ResultReceiver receiver = intent.getParcelableExtra(DownloadReceiver.ARGUMENT_RECEIVER);
             try {
@@ -66,13 +69,11 @@ class MyServiceDownload extends IntentService {
                     // publishing the progress....
                     Bundle resultData = new Bundle();
                     progress =(int) total * 100 / fileLength;
-                    resultData.putInt(DownloadReceiver.ARGUMENT_PROGRESS ,(int) (total * 100 / fileLength));
-                    receiver.send(UPDATE_PROGRESS, resultData);
-                    output.write(data, 0, count);
-                    if(progress % 10 == 0){
-                        builder.setContentText(String.valueOf(progress)+"%");
-                        notificationManager.notify(NOTIFY_ID, builder.build());
+                    if(progress % 10 == 0) {
+                        resultData.putInt(DownloadReceiver.ARGUMENT_PROGRESS, (int) (total * 100 / fileLength));
+                        receiver.send(UPDATE_PROGRESS, resultData);
                     }
+                    output.write(data, 0, count);
                     Log.d("MyTag",String.valueOf(progress));
                 }
 
@@ -86,15 +87,18 @@ class MyServiceDownload extends IntentService {
             Bundle resultData = new Bundle();
             resultData.putInt(DownloadReceiver.ARGUMENT_PROGRESS ,100);
             receiver.send(UPDATE_PROGRESS, resultData);
-            builder.setContentText(String.valueOf(100)+"%");
-            notificationManager.notify(NOTIFY_ID, builder.build());
             Log.d("MyTag",String.valueOf(progress));
             try {
                 unzip(zipFileName, zipFileLocation);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        resultData.putString(DownloadReceiver.ARGUMENT_PROGRESS ,path);
+        receiver.send(PATH_UPDATE, resultData);
 
+        Intent intentPath = new Intent(MainActivity.BROADCAST_ACTION);
+        intentPath.putExtra(MainActivity.ARGUMENT_PATH, path);
+        sendBroadcast(intentPath);
             onDestroy();
         }
 
@@ -103,9 +107,6 @@ class MyServiceDownload extends IntentService {
         int BUFFER_SIZE = 1024;
                 int size;
                 byte[] buffer = new byte[BUFFER_SIZE];
-               builder.setContentText(getResources().getString(R.string.text_unzip_notification));
-               notificationManager.notify(NOTIFY_ID, builder.build());
-
                 try {
                     File f = new File(String.valueOf(zipFileLocation));
                     if(!f.isDirectory()) {
@@ -115,7 +116,7 @@ class MyServiceDownload extends IntentService {
                     try {
                         ZipEntry ze;
                         while ((ze = zin.getNextEntry()) != null) {
-                            String path = zipFileLocation  +"/"+ ze.getName();
+                            path = zipFileLocation  +"/"+ ze.getName();
 
                             if (ze.isDirectory()) {
                                 File unzipFile = new File(path);
@@ -153,32 +154,12 @@ class MyServiceDownload extends IntentService {
                 }
    }
 
-   public void setNotification(){
-       builder = new NotificationCompat.Builder(this, "chanel my");
-       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-           /* Create or update. */
-           NotificationChannel channel = new NotificationChannel("chanel my",
-                   "Channel human readable title",
-                   NotificationManager.IMPORTANCE_DEFAULT);
-           NotificationManager notificationManager = getSystemService(NotificationManager.class);
-           assert notificationManager != null;
-           notificationManager.createNotificationChannel(channel);
-       }
-       builder.setSmallIcon(R.mipmap.ic_launcher);
-       builder.setContentText(getResources().getString(R.string.title_notification));
-       builder.setContentText(getResources().getString(R.string.download_file));
-       builder.setOngoing(true);
 
-
-       notificationManager = NotificationManagerCompat.from(this);
-       notificationManager.notify(NOTIFY_ID, builder.build());
-
-   }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        notificationManager.cancelAll();
+
     }
 
     @Nullable
