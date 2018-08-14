@@ -34,8 +34,6 @@
                 app:titleEnabled="true"
                 app:toolbarId="@+id/toolbar">
 
-
-
                 <ImageView
                     android:id="@+id/app_bar_image"
                     android:layout_width="match_parent"

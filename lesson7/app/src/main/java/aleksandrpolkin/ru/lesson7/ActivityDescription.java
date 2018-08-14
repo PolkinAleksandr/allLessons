@@ -38,7 +38,11 @@ public class ActivityDescription extends AppCompatActivity {
     static final String ARGUMENT_DESCRIPTION_OBJECT = "arg_desc_obj";
     static final String ARGUMENT_DESCRIPTION_TIME = "arg_desc_time";
     static final String ARGUMENT_DESCRIPTION_PIC = "arg_desc_pic";
+    static final String ARGUMENT_DESCRIPTION_BACK = "arg_desc_back";
+    static final int REQUEST_CODE_DESCRIPTION = 304;
     static final int DEFAULT_VALUE = 0;
+    static final int RESULT_MAP = 10;
+    static final int RESULT_RESYCLER = 11;
     private String time;
     private int pic = 0;
     private ObjectsData objectsData;
@@ -47,13 +51,15 @@ public class ActivityDescription extends AppCompatActivity {
     private android.support.v7.widget.Toolbar toolbar;
     private TimePickerDialog timePickerDialog;
     private TextView textMemory;
+    private int back;
 
-    static Intent createOpenActivity(Context context, ObjectsData objectsData, String time, int pic){
+    static Intent createOpenActivity(Context context, ObjectsData objectsData, String time, int pic, int back){
         Intent intent = new Intent(context, ActivityDescription.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(ARGUMENT_DESCRIPTION_OBJECT, objectsData);
         bundle.putString(ARGUMENT_DESCRIPTION_TIME, time);
         bundle.putInt(ARGUMENT_DESCRIPTION_PIC, pic);
+        bundle.putInt(ARGUMENT_DESCRIPTION_BACK, back);
         intent.putExtra(ARGUMENT_ACTIVITY_DESCRIPTION, bundle);
         return intent;
     }
@@ -70,6 +76,7 @@ public class ActivityDescription extends AppCompatActivity {
         objectsData = bundle.getParcelable(ARGUMENT_DESCRIPTION_OBJECT);
         time = bundle.getString(ARGUMENT_DESCRIPTION_TIME);
         pic = bundle.getInt(ARGUMENT_DESCRIPTION_PIC, DEFAULT_VALUE);
+        back = bundle.getInt(ARGUMENT_DESCRIPTION_BACK);
         TextView textDescription = findViewById(R.id.textView_description);
         TextView textTime = findViewById(R.id.textView_time);
         TextView textName = findViewById(R.id.textView_name);
@@ -84,15 +91,8 @@ public class ActivityDescription extends AppCompatActivity {
         textName.setText(objectsData.getName());
         textMemory = findViewById(R.id.textView_memory);
 
-        textMemory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              startActivityForResult(ActivityDialog.createOpenActivity(ActivityDescription.this,objectsData.getName()),ActivityDialog.ACTIVITY_DIALOG_REQUEST);
-            }
-        });
+        textMemory.setOnClickListener(v -> startActivityForResult(ActivityDialog.createOpenActivity(ActivityDescription.this,objectsData.getName()),ActivityDialog.ACTIVITY_DIALOG_REQUEST));
 
-
-      //  imageApp.setImageResource(R.color.black_87);
         if(pic == R.drawable.ic_brige_late){
             setPicture(MainActivity.BASE_SITE + objectsData.getPhotoClose());
         } else {
@@ -123,10 +123,30 @@ public class ActivityDescription extends AppCompatActivity {
             @Override
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 progressBar.setVisibility(View.GONE);
-
                 imageApp.setImageDrawable(resource);
                 return true;
             }
         }).submit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        checkParentFragment();
+        finish();
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        checkParentFragment();
+    }
+
+    void checkParentFragment(){
+        if(back == OnMyGetTextForActivity.map) {
+            setResult(RESULT_MAP);
+        }else{
+            setResult(RESULT_RESYCLER);
+        }
     }
 }

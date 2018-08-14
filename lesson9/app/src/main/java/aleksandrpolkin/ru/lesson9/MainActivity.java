@@ -1,6 +1,5 @@
 package aleksandrpolkin.ru.lesson9;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -116,14 +115,9 @@ public class MainActivity extends AppCompatActivity implements ServiceCallback{
             unbindService(serviceConnection);
             bound = false;
         }
-//        if (progressDialog != null) {
-//            progressDialog.dismiss ();
-//            progressDialog = null;
-//        }
     }
 
     private ServiceConnection serviceConnection = new ServiceConnection() {
-
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             // cast the IBinder and get MyService instance
@@ -158,8 +152,5 @@ public class MainActivity extends AppCompatActivity implements ServiceCallback{
             Bitmap img = BitmapFactory.decodeStream(bis);
             view.setImageBitmap(img);
         }
-    }
-
-    public class BROADCAST_ACTION {
     }
 }

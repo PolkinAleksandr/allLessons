@@ -60,7 +60,6 @@ public class FragmentRecycle extends Fragment {
         final RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
         adapter = new RecycleAdapter(objectsData);
-        RecycleAdapter.MyViewHolder myViewHolder;
         recyclerView.setAdapter(adapter);
         return v;
     }
