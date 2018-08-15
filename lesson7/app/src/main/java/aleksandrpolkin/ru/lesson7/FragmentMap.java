@@ -3,20 +3,27 @@ package aleksandrpolkin.ru.lesson7;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -35,6 +42,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import aleksandrpolkin.ru.lesson7.data.ObjectsData;
 
@@ -84,9 +92,25 @@ public class FragmentMap extends Fragment {
             mapFragment.getMapAsync(googleMap -> {
                 googleMaps = googleMap;
                 fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view.getContext());
-                if (ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getView()).getContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        //Location Permission already granted
+                        fusedLocationProviderClient.requestLocationUpdates(createLocationRequest(), locationCallback, Looper.myLooper());
+                        googleMaps.setMyLocationEnabled(true);
+                    } else {
+                        //Request Location Permission
+                        checkLocationPermission();
+                    }
+                }
+                else {
+                    fusedLocationProviderClient.requestLocationUpdates(createLocationRequest(), locationCallback, Looper.myLooper());
+                    googleMaps.setMyLocationEnabled(true);
+                }
+                if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED &&
-                        ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
                                 PackageManager.PERMISSION_GRANTED)
                 {
                     requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
@@ -141,38 +165,108 @@ public class FragmentMap extends Fragment {
         return locationRequest;
     }
 
-    @SuppressLint("MissingPermission")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == MY_PERMISSION_FINE_LOCATION){
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                googleMaps.getUiSettings().setMyLocationButtonEnabled(true);
-                googleMaps.setMyLocationEnabled(true);
-//                fusedLocationProviderClient.requestLocationUpdates(createLocationRequest(),
-//                        new LocationCallback() {
-//                            @Override
-//                            public void onLocationResult(LocationResult locationResult) {
-//                                if (locationResult == null) {
-//                                    return;
-//                                }
-//                                for (Location location : locationResult.getLocations()) {
-//                                        Log.i("MapsActivity", "Location: " + location.getLatitude() + " " + location.getLongitude());
-//                                        lastLocation = location;
-//                                        if (marker != null) {
-//                                            marker.remove();
-//                                        }
-//
-//                                        //Place current location marker
-//                                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-//                                        MarkerOptions markerOptions = new MarkerOptions();
-//                                        markerOptions.position(latLng);
-//                                        markerOptions.title("Current Position");
-//                                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-//                                        marker = googleMaps.addMarker(markerOptions);
-//                                }
-//                }}, null);
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getView()).getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) getView().getContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user response! After the user
+                // sees the explanation, try again to request the permission.
+                new AlertDialog.Builder(getView().getContext())
+                        .setTitle("Location Permission Needed")
+                        .setMessage("This app needs the Location permission, please accept to use location functionality")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Prompt the user once explanation has been shown
+                                requestPermissions(
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSION_FINE_LOCATION );
+                            }
+                        })
+                        .create()
+                        .show();
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                requestPermissions(
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSION_FINE_LOCATION );
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // location-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getView()).getContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        fusedLocationProviderClient.requestLocationUpdates(createLocationRequest(), locationCallback, Looper.myLooper());
+                        googleMaps.setMyLocationEnabled(true);
+                    }
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(Objects.requireNonNull(getView()).getContext(), "permission denied", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+
+    }
+
+    LocationCallback locationCallback = new LocationCallback(){
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            for (Location location : locationResult.getLocations()) {
+                Log.i("MapsActivity", "Location: " + location.getLatitude() + " " + location.getLongitude());
+                lastLocation = location;
+                if (marker != null) {
+                   marker.remove();
+                }
+
+                //Place current location marker
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                markerOptions.title("Current Position");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+                marker = googleMaps.addMarker(markerOptions);
+
+                //move map camera
+
+            }
+        };
+
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        //stop location updates when Activity is no longer active
+        if (fusedLocationProviderClient != null) {
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         }
     }
 
