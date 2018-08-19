@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements OnMyGetTextForAct
         if(resultCode == ActivityDescription.RESULT_MAP){
             openFragmentMap();
             check = true;
-        }else if(resultCode == ActivityDescription.RESULT_RESYCLER){
+        }else if(resultCode == ActivityDescription.RESULT_RECYCLER){
             openFragmentRecycler();
             check = false;
         }
