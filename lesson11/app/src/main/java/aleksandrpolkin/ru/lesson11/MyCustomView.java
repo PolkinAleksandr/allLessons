@@ -37,7 +37,6 @@ public class MyCustomView extends View{
     String text;
     Rect rectDate;
     Rect rectData;
-    int duration = 500;
 
     private void init() {
         yFinish = getHeight() / 10 * 2;
@@ -99,12 +98,12 @@ public class MyCustomView extends View{
             }
             yDate = getHeight() / 10 * 9;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                canvas.drawRoundRect(x-5,  y - yFinish/yMax*data.get(i), x+5, y,rxy,rxy, paint);
+                canvas.drawRoundRect(x-5,  y - yFinish*data.get(i)/(float)yMax, x+5, y,rxy,rxy, paint);
             }else{
-                canvas.drawLine(x,  y, x, y - yFinish/yMax*data.get(i), paint);
+                canvas.drawLine(x,  y, x, y - yFinish*data.get(i)/(float)yMax, paint);
             }
             canvas.drawText(date.get(i), xDate, yDate, textDatePaint);
-            canvas.drawText(data.get(i).toString(), xText, y - yFinish/yMax*data.get(i)-getHeight()/10, textPaint);
+            canvas.drawText(data.get(i).toString(), xText, y - yFinish*data.get(i)/(float)yMax-getHeight()/10, textPaint);
         }
     }
 
@@ -157,6 +156,7 @@ public class MyCustomView extends View{
     public ViewPropertyAnimator animate() {
         getLenghtLine();
         ValueAnimator animation = ValueAnimator.ofInt(0, y - yKon);
+        int duration = 500;
         animation.setDuration(duration);
         animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -169,6 +169,7 @@ public class MyCustomView extends View{
         return super.animate();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
