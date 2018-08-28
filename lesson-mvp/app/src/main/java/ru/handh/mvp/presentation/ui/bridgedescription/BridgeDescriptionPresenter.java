@@ -1,10 +1,10 @@
 package ru.handh.mvp.presentation.ui.bridgedescription;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -18,6 +18,7 @@ import ru.handh.mvp.data.model.FinalBridge;
 import ru.handh.mvp.presentation.ui.base.BasePresenter;
 import ru.handh.mvp.provider.BridgesFinalCreate;
 import ru.handh.mvp.provider.BridgesProvider;
+import ru.handh.mvp.provider.ImageProvider;
 
 public class BridgeDescriptionPresenter extends BasePresenter<BridgesDescriptionMvpView> {
 
@@ -56,13 +57,12 @@ public class BridgeDescriptionPresenter extends BasePresenter<BridgesDescription
                         });
     }
 
-    public void setPicture(RequestManager glide, String site, FinalBridge bridge, int check) {
-        checkViewAttached();
+    public void setPicture(Context context, FinalBridge bridge, int check) {
         getMvpView().showProgressImage();
         if(bridge.getPic() == check){
-            glide.load(site+ bridge.getPhotoClose()).listener(downloadGlide()).submit();
+            ImageProvider.loadPhoto(context, bridge, downloadGlide(), false);
         } else {
-            glide.load(site + bridge.getPhotoOpen()).listener(downloadGlide()).submit();
+            ImageProvider.loadPhoto(context, bridge, downloadGlide(), true);
         }
     }
 

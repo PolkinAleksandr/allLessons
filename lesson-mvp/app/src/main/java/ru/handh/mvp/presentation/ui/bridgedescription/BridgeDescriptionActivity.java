@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.bumptech.glide.Glide;
-
 import ru.handh.mvp.R;
 import ru.handh.mvp.data.model.FinalBridge;
 import ru.handh.mvp.presentation.ui.base.BaseActivity;
@@ -24,7 +22,6 @@ public class BridgeDescriptionActivity extends BaseActivity implements BridgesDe
     private static final int VIEW_ERROR = 2;
     private static final String  EXTRA_ID = "ext_id";
     private static final int DEFAULT = 0;
-    private static final String BASE_SITE = "http://gdemost.handh.ru/";
 
     private ViewFlipper viewFlipper, viewFlipperImage;
     private Button buttonRetry;
@@ -87,7 +84,7 @@ public class BridgeDescriptionActivity extends BaseActivity implements BridgesDe
         textTimeOpen.setText(bridge.getTime());
         imageStateBridge.setImageResource(bridge.getPic());
         textDescriptionBridge.setText(bridge.getDescription());
-        bridgeDescriptionPresenter.setPicture(Glide.with(this), BASE_SITE, bridge,R.drawable.ic_brige_late);
+        bridgeDescriptionPresenter.setPicture(this, bridge, R.drawable.ic_brige_late);
     }
 
     @Override
